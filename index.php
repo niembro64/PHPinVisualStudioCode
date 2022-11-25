@@ -1,4 +1,14 @@
+<?php
+// Start the session
+session_start();
+?>
+
 <!DOCTYPE html>
+<?php
+$cookie_name = "user";
+$cookie_value = "John Doe";
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+?>
 <html lang="en">
 
 <head>
@@ -10,13 +20,278 @@
 
 <body>
 
-  <h1>Index</h1>
+  <?php
+  class Food
+  {
+    public $calories;
+
+    function __construct($calories)
+    {
+      $this->calories = $calories;
+    }
+
+    function getCalories()
+    {
+      return $this->calories;
+    }
+  }
+
+  class Fruit extends Food
+  {
+    public $name;
+    private $color;
+
+    function __construct($name, $color, $calories)
+    {
+      $this->name = $name;
+      $this->color = $color;
+      parent::__construct($calories);
+    }
+    function get_name()
+    {
+      return $this->name;
+    }
+    function get_color()
+    {
+      return $this->color;
+    }
+    function set_color($color)
+    {
+      $this->color = $color;
+    }
+  }
+
+  $food = new Food(100);
+  echo $food->getCalories();
+  echo "<br>";
+  echo "<br>";
+
+  $apple = new Fruit("Apple", "red", 300);
+  echo $apple->get_name();
+  echo "<br>";
+  echo $apple->get_color();
+  echo "<br>";
+  echo $apple->getCalories();
+  echo "<br>";
+
+  try {
+    echo $apple->name;
+  } catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+  }
+  echo "<br>";
+  try {
+    echo $apple->color;
+  } catch (Error $e) {
+    echo "Error: " . $e->getMessage();
+  }
+  echo "<br>";
+
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  ?>
+
+  <?php
+  $ageObject = array("Peter" => 35, "Ben" => 37, "Joe" => 43);
+  $ageArray = array(35, 375, 43);
+  $ageMixed = array("Peter" => 35, "Ben" => 37, "Joe" => 43, 44, 45, 46);
+
+  echo json_encode($ageObject);
+  echo "<br>";
+  echo json_encode($ageArray);
+  echo "<br>";
+  echo json_encode($ageMixed);
+  echo "<br>";
+
+  echo $age["Peter"];
+
+  $ageObjectString = '{"Peter":35,"Ben":37,"Joe":43}';
+  $ageArrayString = '[35,375,43]';
+  $ageMixedString = '{"Peter":35,"Ben":37,"Joe":43,44,45,46}';
+
+
+
+  $newAgeObject =  json_decode($ageObjectString);
+  echo "<br>";
+  echo $newAgeObject->Peter;
+  echo "<br>";
+  echo $ageArray[1];
+  echo "<br>";
+  echo $newAgeObject->Joe;
+  echo "<br>";
+
+  echo var_dump($newAgeObject);
+
+  echo "<br>";
+  ?>
+
+  <?php
+  function exclaim($str)
+  {
+    return $str . "! ";
+  }
+
+  function ask($str)
+  {
+    return $str . "? ";
+  }
+
+  function printFormatted($str, $format)
+  {
+    // Calling the $format callback function
+    echo $format($str);
+  }
+
+  // Pass "exclaim" and "ask" as callback functions to printFormatted()
+  printFormatted("Hello world", "exclaim");
+  printFormatted("Hello world", "ask");
+
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  ?>
+
+  <?php
+  $strings = ["apple", "orange", "banana", "coconut"];
+  $lengths = array_map(function ($item) {
+    return strlen($item);
+  }, $strings);
+  print_r($lengths);
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  ?>
+
+  <!-- <table>
+    <tr>
+      <th>Variable</th>
+      <th>Value</th>
+    </tr>
+
+    <?php
+    $rockPaperScissorsKeyValueArray = array("rock" => "rockValue", "paper" => "paperValue", "scissors" => "scissorsValue");
+    foreach ($rockPaperScissorsKeyValueArray as $id => $filter) {
+      echo '<tr>
+      <td>' . $filter . '</td>
+      <td>' . filter_id($filter) . '</td>
+      </tr>';
+    }
+    ?>
+  </table> -->
+
+  <?php
+  // Set session variables
+  $_SESSION["favcolor"] = "green";
+  $_SESSION["favanimal"] = "cat";
+  echo "Session variables are set.";
+  ?>
+
+  <?php
+  // Echo session variables that were set on previous page
+  echo "Favorite color is " . $_SESSION["favcolor"] . ".<br>";
+  echo "Favorite animal is " . $_SESSION["favanimal"] . ".";
+  ?>
 
 
   <?php
+  if (!isset($_COOKIE[$cookie_name])) {
+    echo "Cookie named '" . $cookie_name . "' is not set!";
+  } else {
+    echo "Cookie '" . $cookie_name . "' is set!<br>";
+    echo "Value is: " . $_COOKIE[$cookie_name];
+  }
+  ?>
 
+  <?php
+  include './upload.php';
+  ?>
+
+  <form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+  </form>
+
+
+  <form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+  </form>
+
+
+
+  <?php
+  echo readfile("./webdictionary.txt");
+  $myFileOpenRead = fopen("./webdictionary.txt", "r") or die("Unable to open file!");
+
+  echo $myFileOpenRead . "<br>";
+
+  echo "<br>";
+  echo "<br>";
+
+  // $myfile = fopen("./webdictionary.txt", "w") or die("Unable to open file!");
+  $myfile = fopen("./webdictionary.txt", "a") or die("Unable to open file!");
+  $txt = "John Doe\n";
+  fwrite($myfile, $txt);
+  $txt = "Jane Doe\n";
+  fwrite($myfile, $txt);
+  fclose($myfile);
+
+  fclose($myFileOpenRead);
+
+  ?>
+
+
+  <?php
+  include './header.php';
+  ?>
+  <h1>Index</h1>
+
+  <p>&copy; 2010-<?php echo date("Y"); ?></p>
+  <?php
+
+  echo "Today is " . date("Y/m/d") . "<br>";
+  echo "Today is " . date("Y.m.d") . "<br>";
+  echo "Today is " . date("Y-m-d") . "<br>";
+  echo "Today is " . date("l");
+  echo "<br>";
+  echo "The time is " . date("h:i:sa");
+  echo "<br>";
+  echo "The time is " . date("h:i:sa");
+  echo "<br>";
+  echo "The time is " . date("h:i:sa");
+  echo "<br>";
+
+
+  ?>
+
+  <form action="./welcome_post.php" method="post">
+    Name: <input type="text" name="name"><br>
+    E-mail: <input type="text" name="email"><br>
+    Website: <input type="text" name="website"><br>
+    Comment: <textarea name="comment" rows="5" cols="40"></textarea><br>
+    <input type="submit">
+  </form>
+  <form action="./welcome._get.php" method="get">
+    Name: <input type="text" name="name"><br>
+    E-mail: <input type="text" name="email"><br>
+    <input type="submit">
+  </form>
+
+
+  <a href="test_get.php?subject=PHP&web=W3schools.com">Test $GET</a>
+  <!-- <?php
+
+        echo "Study ";
+        echo $_GET['subject'];
+        echo $_GET['web'];
+        ?>
+ -->
+
+  <?php
   $name = 'Eric Niemo';
-
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // collect value of input field
     $name = $_REQUEST['fname'];
@@ -26,11 +301,22 @@
       echo $name;
     }
   }
+  ?>
 
+  <?php
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // collect value of input field
+    $name = $_POST['fname'];
+    if (empty($name)) {
+      echo "Name is empty";
+    } else {
+      echo $name;
+    }
+  }
   ?>
 
   <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    Name: <input type="text" name="fname" value="$name" placeholder="here eric">
+    Name: <input type="text" name="fname" value="<?php echo htmlspecialchars($name) ?>" placeholder="Full Name">
     <input type="submit">
   </form>
 
