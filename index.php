@@ -21,6 +21,38 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
 <body>
 
   <?php
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password);
+
+  // Check connection
+  if ($conn->connect_error) {
+    die("DB Connection failed: " . $conn->connect_error . "<br>");
+  }
+  echo "DB Connected successfully" . "<br>";
+
+
+  $sql = "SELECT * FROM `test`.`foods`";
+  // $sql = "SELECT * FROM `foods`";
+
+  $result = $conn->query($sql);
+
+  if ($result) {
+    // output data of each row
+    while ($row = $result->fetch_assoc()) {
+      echo " - Name: " . $row["name"] . " | Calories:  " . $row["calories"] . "<br>";
+    }
+  } else {
+    echo "0 results";
+  }
+
+
+  ?>
+
+  <?php
   class Food
   {
     public $calories;
@@ -105,6 +137,9 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
       return 0.5;
     }
   }
+
+  // requires php 8.0 or higher?
+  // $robySteak = new Steak(saltiness: 5, calories: 100);
 
   $rubarbSteak = new Steak();
   echo $rubarbSteak->getInfo();
