@@ -34,7 +34,38 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
     {
       return $this->calories;
     }
+    public function getInfo()
+    {
+      return "This food has " . $this->calories . " calories.";
+    }
   }
+
+  interface Meat
+  {
+    public function getSaltiness();
+  }
+
+  class Steak extends Food implements Meat
+  {
+    public $saltiness;
+
+    function __construct($calories, $saltiness)
+    {
+      $this->calories = $calories;
+      $this->saltiness = $saltiness;
+    }
+
+    function getSaltiness()
+    {
+      return $this->saltiness;
+    }
+
+    function getInfo()
+    {
+      return "This meat is " . $this->saltiness . " salty. " . parent::getInfo();
+    }
+  }
+
 
   class Fruit extends Food
   {
@@ -59,7 +90,21 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
     {
       $this->color = $color;
     }
+    function getInfo()
+    {
+      return " This fruit named " . $this->name . " is " . $this->color . ". " . parent::getInfo();
+    }
+
+    public function getCost()
+    {
+      return 0.5;
+    }
   }
+
+  $primeRib = new Steak(1000, 10);
+  echo $primeRib->getInfo();
+  echo "<br>";
+  echo "<br>";
 
   $food = new Food(100);
   echo $food->getCalories();
@@ -73,6 +118,10 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
   echo "<br>";
   echo $apple->getCalories();
   echo "<br>";
+  echo $apple->getInfo();
+  echo "<br>";
+
+
 
   try {
     echo $apple->name;
@@ -96,6 +145,45 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
   $ageObject = array("Peter" => 35, "Ben" => 37, "Joe" => 43);
   $ageArray = array(35, 375, 43);
   $ageMixed = array("Peter" => 35, "Ben" => 37, "Joe" => 43, 44, 45, 46);
+
+
+  $multiTop = array(array(1, 2, 3), array(4, 5, 6), array(7, 8, 9));
+
+  echo $multiTop[0][0];
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+
+  $multiTopAssociative = array(array("a" => 1, "b" => 2, "c" => 3), array("d" => 4, "e" => 5, "f" => 6), array("g" => 7, "h" => 8, "i" => 9));
+
+  echo $multiTopAssociative[0]["a"];
+  echo "<br>";
+  echo "<br>";
+  echo $multiTopAssociative[1]["d"];
+  echo "<br>";
+  echo "<br>";
+
+  echo "AgeMixed";
+  echo count($ageMixed);
+
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+
+  for ($i = 0; $i < count($ageMixed); $i++) {
+    echo $i;
+    echo "<br>";
+    echo $ageMixed[$i];
+    echo "<br>";
+  }
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
 
   echo json_encode($ageObject);
   echo "<br>";
