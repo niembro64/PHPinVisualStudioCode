@@ -49,12 +49,17 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
   {
     public $saltiness;
 
-    function __construct($calories, $saltiness)
+    function __construct($calories = 0, $saltiness = 0)
     {
       $this->calories = $calories;
       $this->saltiness = $saltiness;
+      echo self::createMessage();
     }
 
+    function createMessage()
+    {
+      return "Your steak was created! It has " . $this->calories . " calories and " . $this->saltiness . " saltiness.";
+    }
     function getSaltiness()
     {
       return $this->saltiness;
@@ -100,6 +105,16 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
       return 0.5;
     }
   }
+
+  $rubarbSteak = new Steak();
+  echo $rubarbSteak->getInfo();
+  echo "<br>";
+  echo "<br>";
+
+  $chuckSteak = new Steak(1000);
+  echo $chuckSteak->getInfo();
+  echo "<br>";
+  echo "<br>";
 
   $primeRib = new Steak(1000, 10);
   echo $primeRib->getInfo();
