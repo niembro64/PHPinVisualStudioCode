@@ -34,12 +34,11 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
   }
   echo "DB Connected successfully" . "<br>";
 
-
+  $sqladd = "INSERT INTO `test`.`foods` (`name`, `calories`) VALUES ('Burger', '100');";
+  $result2 = $conn->query($sqladd);
+  
   $sql = "SELECT * FROM `test`.`foods`";
-  // $sql = "SELECT * FROM `foods`";
-
   $result = $conn->query($sql);
-
   if ($result) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
@@ -48,6 +47,11 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1
   } else {
     echo "0 results";
   }
+
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
+  echo "<br>";
 
 
   ?>
